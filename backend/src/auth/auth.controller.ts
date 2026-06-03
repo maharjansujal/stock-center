@@ -25,7 +25,7 @@ export async function registerUser(
   }
 }
 
-export async function loginUser(req: Request<LoginInput>, res: Response) {
+export async function loginUser(req: Request<{}, any, LoginInput>, res: Response) {
   try {
     const { email, password } = req.body;
 

@@ -1,7 +1,6 @@
 import { createRequestService, getPersonalRequestsService, getRequestsService, reviewRequestService, updateRequestService } from "./request.service";
 import { Response, Request } from "express"
 import { AuthenticatedRequest } from "../middleware/authenticateUser"
-import { InventoryRequest } from "../types/request";
 
 export async function createRequest(
   req: AuthenticatedRequest,

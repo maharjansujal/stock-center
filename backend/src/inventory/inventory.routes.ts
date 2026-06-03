@@ -4,7 +4,7 @@ import { addInventory, deleteInventory, getInventories, updateInventory } from "
 const router = Router();
 
 router.get('/', getInventories);
-router.post('/add', addInventory);
+router.post('/create', addInventory);
 router.patch('/update/:public_id', updateInventory);
 router.delete('/delete', deleteInventory);
 
