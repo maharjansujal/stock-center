@@ -2,9 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const inventory_controller_1 = require("./inventory.controller");
+const authenticateUser_1 = require("../middleware/authenticateUser");
 const router = (0, express_1.Router)();
 router.get('/', inventory_controller_1.getInventories);
-router.post('/add', inventory_controller_1.addInventory);
-router.patch('/update/:public_id', inventory_controller_1.updateInventory);
-router.delete('/delete', inventory_controller_1.deleteInventory);
+router.post('/create', authenticateUser_1.requireAdmin, inventory_controller_1.addInventory);
+router.patch('/update/:public_id', authenticateUser_1.requireAdmin, inventory_controller_1.updateInventory);
+router.delete('/delete/:public_id', authenticateUser_1.requireAdmin, inventory_controller_1.deleteInventory);
 exports.default = router;

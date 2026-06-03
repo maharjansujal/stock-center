@@ -14,7 +14,7 @@ async function runMigrations() {
     const sqlPath = path.join(__dirname, "../src/db/schema.sql");
     const sql = fs.readFileSync(sqlPath, "utf8");
 
-    console.log("Connecting to Neon and applying schema changes...");
+    console.log("Connecting to Render and applying schema changes...");
     await pool.query(sql);
     console.log("Database tables initialized successfully!");
   } catch (error) {
