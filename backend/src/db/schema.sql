@@ -13,7 +13,7 @@ CREATE TABLE users (
 );
 
 -- Inventory
-CREATE TABLE inventory (
+CREATE TABLE inventories (
     id SERIAL PRIMARY KEY,
     public_id UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
     item_name VARCHAR(150) NOT NULL,
@@ -45,21 +45,8 @@ CREATE TABLE inventory_transactions (
     item_id INT NOT NULL REFERENCES inventory(id) ON DELETE CASCADE,
     user_id INT REFERENCES users(id),
     transaction_type VARCHAR(30) NOT NULL CHECK (
-        transaction_type IN ('stock_in', 'stock_out', 'request_approved', 'manual_adjustment')
+        transaction_type IN ('stock_in', 'stock_out', 'manual_adjustment')
     ),
     quantity INT NOT NULL CHECK (quantity > 0),
-    notes TEXT,
-    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
-);
-
--- Activity Logs
-CREATE TABLE activity_logs (
-    id SERIAL PRIMARY KEY,
-    public_id UUID UNIQUE NOT NULL DEFAULT gen_random_uuid(),
-    user_id INT REFERENCES users(id) ON DELETE SET NULL,
-    action VARCHAR(100) NOT NULL,
-    entity_type VARCHAR(50) NOT NULL,
-    entity_public_id VARCHAR(50),
-    description TEXT,
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
