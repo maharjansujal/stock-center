@@ -46,15 +46,18 @@
                 ├── hero.png
                 ├── react.svg
                 ├── vite.svg
+            └── 📁components
             └── 📁hooks
                 ├── useAuth.ts
+                ├── useInventory.ts
+                ├── useRequest.ts
+            └── 📁pages
             └── 📁types
                 ├── api.ts
             ├── App.css
             ├── App.tsx
             ├── index.css
             ├── main.tsx
-        ├── .env.local
         ├── .gitignore
         ├── eslint.config.js
         ├── index.html
@@ -65,5 +68,6 @@
         ├── tsconfig.json
         ├── tsconfig.node.json
         ├── vite.config.ts
-    └── package.json
+    ├── package.json
+    └── project-structure.md
 ```
