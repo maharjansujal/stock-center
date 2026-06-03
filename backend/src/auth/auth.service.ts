@@ -61,18 +61,20 @@ export async function loginService({ email, password }: LoginInput) {
 
   const token = generateToken({
     email: user.email,
-    user_id: user.user_id,
+    id: user.id,
     name: user.name,
     role: user.role,
+    public_id: user.public_id
   });
 
   return{
     token,
     user: {
-        user_id: user.user_id,
+        user_id: user.id,
         name: user.name,
         public_id: user.public_id,
-        email: user.email
+        email: user.email,
+        role: user.role
     }
   }
 }
