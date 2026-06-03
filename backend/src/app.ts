@@ -14,6 +14,6 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/auth", authRoutes);
-app.use("/inventory", authenticateUser, requireAdmin, inventoryRoutes);
+app.use("/inventories", authenticateUser, requireAdmin, inventoryRoutes);
 
 export default app;
