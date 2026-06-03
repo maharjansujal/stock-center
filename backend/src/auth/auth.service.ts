@@ -70,7 +70,7 @@ export async function loginService({ email, password }: LoginInput) {
   return{
     token,
     user: {
-        user_id: user.id,
+        id: user.id,
         name: user.name,
         public_id: user.public_id,
         email: user.email,

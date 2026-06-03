@@ -64,7 +64,7 @@ export async function updateInventoriesService({
     UPDATE inventories
     SET 
       item_name = COALESCE($2, item_name),
-      total_stock = COALESCE($3, total_stock),
+      total_stock = COALESCE($3, total_stock)
         WHERE public_id = $1
     RETURNING item_name, total_stock, public_id
     `,

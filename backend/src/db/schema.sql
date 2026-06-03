@@ -20,7 +20,7 @@ CREATE TABLE
         total_stock INT NOT NULL CHECK (total_stock >= 0),
         created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        deleted_at TIMESTAMP NOT NULL
+        deleted_at TIMESTAMP
     );
 
 CREATE TABLE

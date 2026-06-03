@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { verifyToken } from "../auth/auth.utils";
 
 interface JWTPayload {
-  user_id: number;
+  id: number;
   public_id: string;
   email: string;
   name: string;
@@ -34,7 +34,7 @@ export function authenticateUser(
     const decoded = verifyToken(token) as JWTPayload;
 
     req.user = {
-      user_id: decoded.user_id,
+      id: decoded.id,
       email: decoded.email,
       name: decoded.name,
       public_id: decoded.public_id,

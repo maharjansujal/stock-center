@@ -5,8 +5,7 @@ const router = Router();
 
 router.get('/', getInventories);
 router.post('/add', addInventory);
-router.patch('/update', updateInventory);
+router.patch('/update/:public_id', updateInventory);
 router.delete('/delete', deleteInventory);
-
 
 export default router;

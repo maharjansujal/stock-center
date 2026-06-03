@@ -6,6 +6,7 @@ import {
   InventoryInput,
   updateInventoriesService,
 } from "./inventory.service";
+import { AuthenticatedRequest } from "../middleware/authenticateUser";
 
 export async function addInventory(
   req: Request<{}, any, InventoryInput>,
@@ -46,12 +47,15 @@ export async function getInventories(_req: Request, res: Response) {
 }
 
 export async function updateInventory(
-  req: Request<{}, any, InventoryInput & { public_id: string }>,
+  req: AuthenticatedRequest,
   res: Response,
 ) {
   try {
-    const { item_name, total_stock, public_id } = req.body;
-
+    const { public_id } = req.params;
+    const { item_name, total_stock } = req.body;
+    if (Array.isArray(public_id)) {
+      throw new Error("Invalid public_id");
+    }
     const inventory = {
       item_name: item_name,
       total_stock: total_stock,
