@@ -6,4 +6,5 @@ export interface Inventory{
     available_stock: number;
     created_at: string;
     updated_at: string;
+    deleted_at: string;
 }
