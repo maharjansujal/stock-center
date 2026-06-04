@@ -40,16 +40,13 @@ export function useAuth() {
   const sessionQuery = useQuery<User | null>({
     queryKey: ["auth-user"],
     queryFn: () => {
-      // 1. Check if we already have the user in memory cache
       const cachedUser = queryClient.getQueryData<User>(["auth-user"]);
       if (cachedUser) return cachedUser;
 
-      // 2. Look into storage container
       const token = localStorage.getItem("auth_token");
       if (!token) return null;
 
       try {
-        // 3. Decode JWT token payload block safely without external libraries
         const base64Url = token.split(".")[1];
         const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
         const jsonPayload = decodeURIComponent(
@@ -61,7 +58,6 @@ export function useAuth() {
 
         const claims = JSON.parse(jsonPayload);
 
-        // 4. Map properties right back into the memory profile state instance
         return {
           id: claims.id,
           public_id: claims.public_id,
@@ -81,7 +77,6 @@ export function useAuth() {
     gcTime: Infinity,
   });
 
-  // 2. Login Mutation
   const loginMutation = useMutation({
     mutationFn: async (credentials: LoginInput) => {
       const { data } = await apiClient.post<LoginResponse>(

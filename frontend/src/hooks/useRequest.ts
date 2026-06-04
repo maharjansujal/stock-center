@@ -83,9 +83,7 @@ export function useRequests() {
       return data;
     },
     onSuccess: () => {
-      // Invalidate requests to update the pending status in the lists
       queryClient.invalidateQueries({ queryKey: ["requests"] });
-      // Invalidate inventories because approving an item updates global stock counters
       queryClient.invalidateQueries({ queryKey: ["inventories"] });
     },
   });
