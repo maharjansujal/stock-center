@@ -4,6 +4,7 @@ import {
   deleteInventoryService,
   getInventoriesService,
   InventoryInput,
+  restoreInventoryService,
   updateInventoriesService,
 } from "./inventory.service";
 import { AuthenticatedRequest } from "../middleware/authenticateUser";
@@ -90,6 +91,27 @@ export async function deleteInventory(req: Request, res: Response) {
   } catch (err) {
     return res.status(500).json({
       message: err instanceof Error ? err.message : "Server error",
+    });
+  }
+}
+
+export async function restoreInventory(req: Request, res: Response) {
+  try {
+    const { public_id } = req.params;
+
+    if (!public_id || Array.isArray(public_id)) {
+      return res.status(400).json({ message: "Invalid or missing required inventory public identifier." });
+    }
+
+    const result = await restoreInventoryService(public_id);
+
+    return res.status(200).json({
+      message: "Inventory item recovered successfully.",
+      inventory: result,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: err instanceof Error ? err.message : "Failed to recover inventory item.",
     });
   }
 }

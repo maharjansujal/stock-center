@@ -26,14 +26,18 @@ export function useInventory() {
   const inventoriesQuery = useQuery<Inventory[]>({
     queryKey: ["inventories"],
     queryFn: async () => {
-      const { data } = await apiClient.get<ApiResponse<Inventory[]>>("/inventories");
+      const { data } =
+        await apiClient.get<ApiResponse<Inventory[]>>("/inventories");
       return data.inventories || [];
     },
   });
 
   const createMutation = useMutation({
     mutationFn: async (newItem: CreateInventoryInput) => {
-      const { data } = await apiClient.post<ApiResponse<Inventory>>("/inventories/create", newItem);
+      const { data } = await apiClient.post<ApiResponse<Inventory>>(
+        "/inventories/create",
+        newItem,
+      );
       return data.inventory;
     },
     onSuccess: () => {
@@ -45,7 +49,7 @@ export function useInventory() {
     mutationFn: async ({ public_id, ...payload }: UpdateInventoryInput) => {
       const { data } = await apiClient.patch<ApiResponse<Inventory>>(
         `/inventories/update/${public_id}`,
-        payload
+        payload,
       );
       return data.updatedInventory;
     },
@@ -56,8 +60,23 @@ export function useInventory() {
 
   const deleteMutation = useMutation({
     mutationFn: async (public_id: string) => {
-      const { data } = await apiClient.delete<ApiResponse<null>>(`/inventories/delete/${public_id}`);
+      const { data } = await apiClient.delete<ApiResponse<null>>(
+        `/inventories/delete/${public_id}`,
+      );
       return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["inventories"] });
+    },
+  });
+
+  const restoreMutation = useMutation({
+    mutationFn: async (public_id: string) => {
+      const { data } = await apiClient.patch<{
+        message: string;
+        inventory: Inventory;
+      }>(`/inventories/restore/${public_id}`);
+      return data.inventory;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["inventories"] });
@@ -69,7 +88,7 @@ export function useInventory() {
     isFetchingInventories: inventoriesQuery.isPending,
     getInventoriesError: inventoriesQuery.error,
 
-    createInventory: createMutation.mutate, 
+    createInventory: createMutation.mutate,
     isCreatingInventory: createMutation.isPending,
     createInventoryError: createMutation.error,
 
@@ -80,5 +99,9 @@ export function useInventory() {
     deleteInventory: deleteMutation.mutate,
     isDeletingInventory: deleteMutation.isPending,
     deleteInventoryError: deleteMutation.error,
+
+    restoreInventory: restoreMutation.mutate,
+    isRestoringInventory: restoreMutation.isPending,
+    restoreInventoryError: restoreMutation.error,
   };
 }

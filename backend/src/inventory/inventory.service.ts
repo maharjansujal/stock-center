@@ -117,3 +117,22 @@ export async function deleteInventoryService(publicId: string): Promise<void> {
     client.release();
   }
 }
+
+export async function restoreInventoryService(public_id: string) {
+  const result = await pool.query(
+    `
+    UPDATE inventories
+    SET deleted_at = NULL,
+        updated_at = NOW()
+    WHERE public_id = $1
+    RETURNING id, public_id, item_name, total_stock, created_at, updated_at, deleted_at
+    `,
+    [public_id]
+  );
+
+  if (result.rows.length === 0) {
+    throw new Error("Inventory item not found");
+  }
+
+  return result.rows[0];
+}
