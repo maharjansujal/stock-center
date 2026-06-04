@@ -74,12 +74,14 @@ export async function updateInventory(
   }
 }
 
-export async function deleteInventory(
-  req: Request<{}, any, { public_id: string }>,
-  res: Response,
-) {
+export async function deleteInventory(req: Request, res: Response) {
   try {
-    const { public_id } = req.body;
+    const { public_id } = req.params;
+    if (Array.isArray(public_id)) {
+      return res.status(400).json({
+        message: "Inventory not found",
+      });
+    }
     const result = await deleteInventoryService(public_id);
     return res.status(200).json({
       message: "Inventory deleted successfully",
