@@ -6,19 +6,10 @@ import {
 import { useAuth } from "./hooks/useAuth";
 import { LoginPage } from "./pages/LoginPage";
 import Layout from "./components/Layout";
-import { RegisterPage } from "./pages/RegisterPage";
-import { DashboardPage } from "./pages/DashboardPage";
-
-// Dummy placeholder views to prevent TypeScript compilation errors
-const DummyDashboard = () => (
-  <div className="text-white font-medium">Dashboard Sub-View Pane</div>
-);
-const DummyInventory = () => (
-  <div className="text-white font-medium">Inventory Table Registry</div>
-);
-const DummyRequests = () => (
-  <div className="text-white font-medium">Global System Requests Workflow</div>
-);
+import  InventoryPage  from "./pages/InventoryPage";
+import RequestsPage from "./pages/RequestsPage";
+import DashboardPage from "./pages/DashboardPage";
+import RegisterPage from "./pages/RegisterPage";
 
 export default function App() {
   const { isAuthenticated, isRestoringSession, isAdmin } = useAuth();
@@ -33,7 +24,6 @@ export default function App() {
     );
   }
 
-  // Define client-side engine routing configuration mapping matching state rules
   const router = createBrowserRouter([
     {
       path: "/login",
@@ -55,10 +45,10 @@ export default function App() {
 
         {
           path: "inventory",
-          element: isAdmin ? <DummyInventory /> : <Navigate to="/" replace />,
+          element: isAdmin ? <InventoryPage /> : <Navigate to="/" replace />,
         },
 
-        { path: "requests", element: <DummyRequests /> },
+        { path: "requests", element: <RequestsPage /> },
       ],
     },
     {
